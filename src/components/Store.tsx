@@ -4,7 +4,11 @@ import { ShoppingCart, Package, Layout, FileCode, ArrowRight } from 'lucide-reac
 import { DIGITAL_PRODUCTS } from '../constants';
 import { cn } from '../lib/utils';
 
+import { useHirePanel } from '../context/HirePanelContext';
+
 export const Store = () => {
+  const { openHirePanel } = useHirePanel();
+
   return (
     <section id="store" className="py-24 px-6 bg-dark relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-full bg-grid-pattern opacity-20 -z-10" />
@@ -63,11 +67,17 @@ export const Store = () => {
                 </p>
                 
                 <div className="pt-4 flex gap-4">
-                  <button className="flex-1 py-4 rounded-2xl bg-primary text-slate-900 font-black uppercase tracking-widest hover:bg-slate-900 hover:text-primary transition-all glow-yellow flex items-center justify-center gap-2">
+                  <button 
+                    onClick={openHirePanel}
+                    className="flex-1 py-4 rounded-2xl bg-primary text-slate-900 font-black uppercase tracking-widest hover:bg-slate-900 hover:text-primary transition-all glow-yellow flex items-center justify-center gap-2"
+                  >
                     <ShoppingCart className="w-4 h-4" />
                     Buy Now
                   </button>
-                  <button className="w-14 h-14 rounded-2xl glass neon-border flex items-center justify-center text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-all">
+                  <button 
+                    onClick={openHirePanel}
+                    className="w-14 h-14 rounded-2xl glass neon-border flex items-center justify-center text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-all"
+                  >
                     <ShoppingCart className="w-5 h-5" />
                   </button>
                 </div>

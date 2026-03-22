@@ -3,6 +3,7 @@ import { createServer as createViteServer } from "vite";
 import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
+import nodemailer from "nodemailer";
 
 dotenv.config();
 
@@ -18,6 +19,48 @@ async function startServer() {
   // API Routes
   app.get("/api/health", (req, res) => {
     res.json({ status: "ok" });
+  });
+
+  app.post("/api/contact", async (req, res) => {
+    const { name, email, message } = req.body;
+
+    if (!name || !email || !message) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
+
+    const GMAIL_USER = process.env.GMAIL_USER || "xanehelp@gmail.com";
+    const GMAIL_PASS = process.env.GMAIL_PASS;
+
+    if (!GMAIL_PASS) {
+      console.warn("GMAIL_PASS is not set. Email will not be sent.");
+      return res.status(500).json({ 
+        error: "Contact form is currently disabled. Please configure GMAIL_PASS in the application settings to enable email functionality." 
+      });
+    }
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: GMAIL_USER,
+        pass: GMAIL_PASS,
+      },
+    });
+
+    const mailOptions = {
+      from: GMAIL_USER,
+      to: GMAIL_USER, // Send to yourself
+      replyTo: email,
+      subject: `New Portfolio Message from ${name}`,
+      text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+    };
+
+    try {
+      await transporter.sendMail(mailOptions);
+      res.status(200).json({ success: true });
+    } catch (error) {
+      console.error("Error sending email:", error);
+      res.status(500).json({ error: "Failed to send email" });
+    }
   });
 
   // Vite middleware for development

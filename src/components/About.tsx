@@ -1,14 +1,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { SKILLS } from '../constants';
-import { Sparkles, Award, Target, Zap } from 'lucide-react';
+import { Sparkles, Award, Target, Zap, Palette, Layout, Video, Target as TargetIcon } from 'lucide-react';
 
 export const About = () => {
-  const skills = [
-    { name: "Photoshop", icon: "P" },
-    { name: "Figma", icon: "F" },
-    { name: "Illustrator", icon: "I" }
-  ];
+  const getIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'Palette': return <Palette className="w-5 h-5" />;
+      case 'Layout': return <Layout className="w-5 h-5" />;
+      case 'Video': return <Video className="w-5 h-5" />;
+      case 'Target': return <TargetIcon className="w-5 h-5" />;
+      default: return <Zap className="w-5 h-5" />;
+    }
+  };
 
   return (
     <section id="about" className="py-24 px-6 bg-dark">
@@ -34,16 +38,18 @@ export const About = () => {
           initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          className="bg-surface p-10 rounded-[2rem] border border-border"
+          className="bg-surface p-6 rounded-3xl border border-border"
         >
-          <h3 className="text-2xl font-display font-bold mb-8 text-foreground">Technical Skills</h3>
-          <div className="grid gap-6">
-            {skills.map((skill) => (
-              <div key={skill.name} className="flex items-center gap-6 p-4 rounded-2xl bg-surface border border-border hover:border-primary/20 transition-all">
-                <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center text-slate-900 font-bold text-xl">
-                  {skill.icon}
+          <h3 className="text-xl font-display font-bold mb-6 text-foreground">Technical Skills</h3>
+          <div className="grid grid-cols-2 gap-4">
+            {SKILLS.map((skill) => (
+              <div key={skill.name} className="flex flex-col items-center gap-3 p-4 glass border border-border rounded-xl hover:border-primary transition-colors group">
+                <div className="text-primary group-hover:scale-110 transition-transform">
+                  {getIcon(skill.icon)}
                 </div>
-                <span className="text-foreground font-bold uppercase tracking-widest text-sm">{skill.name}</span>
+                <span className="text-[9px] font-bold uppercase tracking-widest text-center text-slate-400 group-hover:text-foreground transition-colors">
+                  {skill.name}
+                </span>
               </div>
             ))}
           </div>

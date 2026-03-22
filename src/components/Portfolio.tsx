@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { X, ExternalLink, ShoppingCart, Filter, CreditCard, ArrowRight, Star, Sparkles } from 'lucide-react';
+import { X, ExternalLink, ShoppingCart, Filter, CreditCard, ArrowRight, Star, Sparkles, Copy, CheckCircle2 } from 'lucide-react';
 import { PORTFOLIO_ITEMS } from '../constants';
 import { cn } from '../lib/utils';
 import { SEO } from './SEO';
@@ -230,18 +230,18 @@ export const Portfolio = () => {
                     </div>
                   </div>
 
-                    <div className="pt-8">
-                      <button 
-                        onClick={() => {
-                          setSelectedItem(null);
-                          openHirePanel();
-                        }}
-                        className="inline-flex items-center gap-4 px-10 py-5 rounded-2xl bg-primary text-slate-900 font-black uppercase tracking-widest hover:bg-slate-900 hover:text-primary hover:scale-105 transition-all glow-yellow"
-                      >
-                        Hire Now
-                        <ArrowRight className="w-5 h-5" />
-                      </button>
-                    </div>
+                  <div className="pt-8 flex flex-wrap gap-4">
+                    <button 
+                      onClick={() => {
+                        setSelectedItem(null);
+                        openHirePanel();
+                      }}
+                      className="inline-flex items-center gap-4 px-10 py-5 rounded-2xl bg-primary text-slate-900 font-black uppercase tracking-widest hover:bg-slate-900 hover:text-primary hover:scale-105 transition-all glow-yellow"
+                    >
+                      Hire Now
+                      <ArrowRight className="w-5 h-5" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </motion.div>

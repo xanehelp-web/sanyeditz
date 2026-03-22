@@ -28,7 +28,7 @@ export const Services = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-slate-50 dark:bg-white/5 rounded-3xl p-10 border border-slate-200 dark:border-white/10 flex flex-col h-full transition-all hover:border-primary/30"
+              className="relative bg-slate-50 dark:bg-white/5 rounded-3xl p-10 border border-slate-200 dark:border-white/10 hover:border-primary/30 flex flex-col h-full transition-all duration-500"
             >
               <div className="mb-8">
                 <h3 className="text-2xl font-display font-bold text-slate-900 dark:text-foreground mb-2">{service.tier}</h3>

@@ -7,7 +7,7 @@ import { Portfolio } from './components/Portfolio';
 import { About } from './components/About';
 import { Services } from './components/Services';
 import { Contact, Footer } from './components/Contact';
-import { LoadingScreen, CustomCursor } from './components/VisualEffects';
+import { LoadingScreen } from './components/VisualEffects';
 import { PrivacyPolicy } from './pages/PrivacyPolicy';
 import { TermsConditions } from './pages/TermsConditions';
 import { CookiesPolicy } from './pages/CookiesPolicy';
@@ -51,7 +51,6 @@ function App() {
       <HirePanelProvider>
         <BrowserRouter>
           <div className="min-h-screen selection:bg-primary selection:text-dark">
-            <CustomCursor />
             <AnimatePresence mode="wait">
               {isLoading ? (
                 <LoadingScreen onComplete={() => setIsLoading(false)} />
