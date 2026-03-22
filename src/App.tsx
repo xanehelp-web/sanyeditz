@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Navbar, Hero } from './components/Hero';
 import { Portfolio } from './components/Portfolio';
@@ -49,7 +49,7 @@ function App() {
   return (
     <HelmetProvider>
       <HirePanelProvider>
-        <BrowserRouter>
+        <HashRouter>
           <div className="min-h-screen selection:bg-primary selection:text-dark">
             <AnimatePresence mode="wait">
               {isLoading ? (
@@ -64,7 +64,7 @@ function App() {
               )}
             </AnimatePresence>
           </div>
-        </BrowserRouter>
+        </HashRouter>
       </HirePanelProvider>
     </HelmetProvider>
   );
