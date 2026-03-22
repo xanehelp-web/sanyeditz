@@ -49,16 +49,16 @@ export const HirePanel = ({ isOpen, onClose }: HirePanelProps) => {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed top-0 right-0 z-[101] h-full w-full max-w-md bg-dark border-l border-border shadow-2xl flex flex-col"
+            className="fixed top-0 right-0 z-[101] h-full w-full max-w-md bg-dark minecraft-border shadow-2xl flex flex-col"
           >
             {/* Header */}
-            <div className="p-6 border-b border-border flex items-center justify-between">
-              <h2 className="text-2xl font-display font-bold text-foreground">
+            <div className="p-6 border-b-4 border-black flex items-center justify-between">
+              <h2 className="text-2xl font-display text-foreground">
                 Hire <span className="text-primary">Team</span>
               </h2>
               <button
                 onClick={onClose}
-                className="p-2 rounded-full hover:bg-surface text-slate-400 hover:text-foreground transition-all"
+                className="p-2 minecraft-border text-slate-400 hover:text-foreground transition-all"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -66,7 +66,7 @@ export const HirePanel = ({ isOpen, onClose }: HirePanelProps) => {
 
             {/* Content */}
             <div className="flex-1 overflow-y-auto p-6 space-y-6">
-              <p className="text-slate-400 text-sm">
+              <p className="text-slate-400 text-xs font-mono">
                 Select a team member to discuss your project requirements.
               </p>
 
@@ -78,20 +78,20 @@ export const HirePanel = ({ isOpen, onClose }: HirePanelProps) => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 + 0.2 }}
                     className={cn(
-                      "group relative p-5 rounded-2xl border transition-all duration-300",
+                      "group relative p-5 minecraft-border transition-all duration-300",
                       employee.isOwner 
-                        ? "bg-primary/5 border-primary/30 shadow-[0_0_20px_rgba(255,215,0,0.05)]" 
-                        : "bg-white/5 border-white/10 hover:border-white/20"
+                        ? "bg-primary/5 border-primary/30" 
+                        : "bg-white/5 border-white/10"
                     )}
                   >
                     <div className="flex items-center gap-4">
                       {/* Avatar */}
-                      <div className="w-16 h-16 rounded-full bg-dark border border-border flex items-center justify-center overflow-hidden shrink-0">
+                      <div className="w-16 h-16 minecraft-border bg-dark flex items-center justify-center overflow-hidden shrink-0">
                         {employee.avatar ? (
                           <img 
                             src={employee.avatar} 
                             alt={employee.name} 
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover pixelated"
                             referrerPolicy="no-referrer"
                           />
                         ) : (
@@ -102,15 +102,15 @@ export const HirePanel = ({ isOpen, onClose }: HirePanelProps) => {
                       {/* Info */}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <h3 className="text-foreground font-bold truncate">{employee.name}</h3>
+                          <h3 className="text-foreground font-display text-xs truncate">{employee.name}</h3>
                           {employee.isOwner && (
-                            <span className="px-2 py-0.5 rounded-full bg-primary/20 text-primary text-[8px] font-black uppercase tracking-widest">
+                            <span className="px-2 py-0.5 minecraft-border bg-primary/20 text-primary text-[8px] font-display uppercase tracking-normal">
                               Owner
                             </span>
                           )}
                         </div>
-                        <p className="text-primary text-xs font-medium mb-1">{employee.role}</p>
-                        <p className="text-slate-400 text-[10px] truncate">{employee.info}</p>
+                        <p className="text-primary text-[10px] font-display mb-1">{employee.role}</p>
+                        <p className="text-slate-400 text-[10px] font-mono truncate">{employee.info}</p>
                       </div>
 
                       {/* Hire Button */}
@@ -120,7 +120,7 @@ export const HirePanel = ({ isOpen, onClose }: HirePanelProps) => {
                         rel="noopener noreferrer"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
-                        className="w-12 h-12 rounded-full bg-primary text-slate-900 flex items-center justify-center shadow-[0_0_15px_rgba(255,215,0,0.3)] hover:shadow-[0_0_25px_rgba(255,215,0,0.5)] transition-all shrink-0"
+                        className="w-12 h-12 minecraft-border bg-primary text-slate-900 flex items-center justify-center transition-all shrink-0"
                       >
                         <MessageCircle className="w-6 h-6 fill-current" />
                       </motion.a>
@@ -131,8 +131,8 @@ export const HirePanel = ({ isOpen, onClose }: HirePanelProps) => {
             </div>
 
             {/* Footer */}
-            <div className="p-6 border-t border-border">
-              <p className="text-[10px] text-slate-500 text-center uppercase tracking-widest font-bold">
+            <div className="p-6 border-t-4 border-black">
+              <p className="text-[10px] text-slate-500 text-center uppercase tracking-normal font-display">
                 Professional Design Services • 24/7 Support
               </p>
             </div>

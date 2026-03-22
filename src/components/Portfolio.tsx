@@ -31,13 +31,13 @@ const ProjectCard = ({ item, onClick }: { item: typeof PORTFOLIO_ITEMS[0], onCli
     <motion.div
       variants={itemVariants}
       onClick={onClick}
-      className="relative aspect-square rounded-3xl overflow-hidden cursor-pointer group glass neon-border-subtle hover:neon-border transition-all duration-500"
+      className="relative aspect-square overflow-hidden cursor-pointer group minecraft-border transition-all duration-500"
     >
       <div className="absolute inset-0 overflow-hidden">
         <motion.img
           src={item.image}
           alt={item.title}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 pixelated"
           referrerPolicy="no-referrer"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
@@ -46,26 +46,23 @@ const ProjectCard = ({ item, onClick }: { item: typeof PORTFOLIO_ITEMS[0], onCli
       <div className="absolute inset-0 p-6 flex flex-col justify-end">
         <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-primary text-[8px] font-black uppercase tracking-[0.3em]">
+            <span className="text-primary text-[8px] font-display uppercase tracking-normal">
               {item.category}
             </span>
             {item.featured && (
               <Star className="w-3 h-3 text-primary fill-primary glow-yellow" />
             )}
           </div>
-          <h3 className="text-xl font-display font-black text-white leading-tight mb-4">
+          <h3 className="text-lg font-display text-white leading-tight mb-4">
             {item.title}
           </h3>
           <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-            <span className="text-white text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
+            <span className="text-white text-[8px] font-display uppercase tracking-normal flex items-center gap-2">
               View Project <ArrowRight className="w-3 h-3" />
             </span>
           </div>
         </div>
       </div>
-
-      {/* Hover Glow */}
-      <div className="absolute inset-0 rounded-3xl border border-primary/0 group-hover:border-primary/50 transition-colors duration-500 pointer-events-none" />
     </motion.div>
   );
 };
@@ -110,11 +107,11 @@ export const Portfolio = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <div className="flex items-center gap-2 text-primary font-black uppercase tracking-[0.3em] text-[10px] mb-4">
+            <div className="flex items-center gap-2 text-primary font-display uppercase tracking-normal text-[10px] mb-4">
               <Sparkles className="w-3 h-3" />
               Showcase
             </div>
-            <h2 className="text-5xl md:text-7xl font-display font-black text-foreground leading-none">
+            <h2 className="text-3xl md:text-5xl font-display text-foreground leading-none">
               Selected <span className="text-gradient">Work</span>
             </h2>
           </motion.div>
@@ -130,10 +127,10 @@ export const Portfolio = () => {
                 key={cat}
                 onClick={() => setFilter(cat)}
                 className={cn(
-                  "px-5 py-2 rounded-full text-[9px] font-black uppercase tracking-widest transition-all duration-300",
+                  "minecraft-btn",
                   filter === cat 
-                    ? "bg-primary text-slate-900 glow-yellow" 
-                    : "glass border border-border text-slate-500 hover:text-foreground hover:border-primary"
+                    ? "bg-primary text-slate-900" 
+                    : "bg-surface text-slate-400 hover:text-foreground"
                 )}
               >
                 {cat}
@@ -186,11 +183,11 @@ export const Portfolio = () => {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-6xl bg-dark border border-border rounded-[3rem] overflow-hidden max-h-[90vh] flex flex-col md:flex-row"
+              className="relative w-full max-w-6xl bg-dark minecraft-border overflow-hidden max-h-[90vh] flex flex-col md:flex-row"
             >
               <button 
                 onClick={() => setSelectedItem(null)}
-                className="absolute top-8 right-8 z-20 w-12 h-12 rounded-full glass border border-border flex items-center justify-center text-foreground hover:bg-surface transition-all"
+                className="absolute top-8 right-8 z-20 w-12 h-12 minecraft-border flex items-center justify-center text-foreground hover:bg-surface transition-all"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -199,31 +196,31 @@ export const Portfolio = () => {
                 <img 
                   src={selectedItem.image} 
                   alt={selectedItem.title} 
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover pixelated"
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent md:bg-gradient-to-r" />
               </div>
               
-              <div className="w-full md:w-2/5 p-8 md:p-16 flex flex-col justify-center bg-dark">
+              <div className="w-full md:w-2/5 p-8 md:p-12 flex flex-col justify-center bg-dark">
                 <div className="space-y-8">
                   <div>
-                    <span className="text-primary text-[10px] font-black uppercase tracking-[0.3em] mb-4 block">
+                    <span className="text-primary text-[10px] font-display uppercase tracking-normal mb-4 block">
                       {selectedItem.category}
                     </span>
-                    <h3 className="text-4xl md:text-6xl font-display font-black text-foreground leading-tight mb-6">
+                    <h3 className="text-2xl md:text-4xl font-display text-foreground leading-tight mb-6">
                       {selectedItem.title}
                     </h3>
-                    <p className="text-slate-400 text-lg font-medium leading-relaxed">
+                    <p className="text-slate-400 text-sm font-mono leading-relaxed">
                       {selectedItem.description}
                     </p>
                   </div>
 
                   <div>
-                    <h4 className="text-foreground text-[10px] font-black uppercase tracking-widest mb-4">Tools & Tech</h4>
+                    <h4 className="text-foreground text-[10px] font-display uppercase tracking-normal mb-4">Tools & Tech</h4>
                     <div className="flex flex-wrap gap-2">
                       {selectedItem.tools.map(tool => (
-                        <span key={tool} className="px-5 py-2.5 rounded-xl glass border border-border text-[10px] font-black uppercase tracking-widest text-slate-300">
+                        <span key={tool} className="px-4 py-2 minecraft-border text-[8px] font-display uppercase tracking-normal text-slate-300">
                           {tool}
                         </span>
                       ))}
@@ -236,10 +233,10 @@ export const Portfolio = () => {
                         setSelectedItem(null);
                         openHirePanel();
                       }}
-                      className="inline-flex items-center gap-4 px-10 py-5 rounded-2xl bg-primary text-slate-900 font-black uppercase tracking-widest hover:bg-slate-900 hover:text-primary hover:scale-105 transition-all glow-yellow"
+                      className="minecraft-btn-primary flex items-center gap-3"
                     >
                       Hire Now
-                      <ArrowRight className="w-5 h-5" />
+                      <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
                 </div>

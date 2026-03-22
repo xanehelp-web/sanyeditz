@@ -55,7 +55,7 @@ export const Navbar = () => {
           <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
             <Sparkles className="w-6 h-6 text-primary" />
           </div>
-          <span className="text-2xl font-gothic tracking-wider text-primary">Sany</span>
+          <span className="text-xl font-display tracking-wider text-primary">Sany</span>
         </Link>
 
         <div className="flex items-center gap-4 md:gap-8">
@@ -69,7 +69,7 @@ export const Navbar = () => {
 
           <button
             onClick={openHirePanel}
-            className="px-5 py-2 md:px-6 md:py-2 rounded-full bg-primary text-slate-900 text-[10px] md:text-xs font-bold uppercase tracking-widest hover:bg-slate-900 hover:text-primary transition-all glow-yellow"
+            className="minecraft-btn-primary"
           >
             Hire Now
           </button>
@@ -86,36 +86,37 @@ export const Hero = () => {
     <section id="home" className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-dark">
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+        <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
+      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full flex flex-col md:flex-row items-center justify-between gap-12">
         <div className="max-w-3xl">
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-primary font-bold uppercase tracking-[0.3em] text-sm mb-4"
+            className="text-primary font-display text-xs mb-6 flex items-center gap-2"
           >
-            Creative Designer
+            <span className="w-2 h-2 bg-primary animate-pixel-float"></span>
+            Creative Minecraft Designer
           </motion.p>
           
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="text-6xl md:text-8xl font-display font-bold leading-tight mb-8"
+            className="text-5xl md:text-7xl font-display leading-tight mb-8"
           >
-            <span className="font-gothic text-primary">Hi, I’m Sany</span>
+            <span className="text-primary">Hi, I’m Sany</span>
           </motion.h1>
           
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-lg text-slate-400 max-w-lg mb-12 leading-relaxed"
+            className="text-sm md:text-base text-slate-400 max-w-lg mb-12 leading-relaxed font-mono"
           >
-            I design visuals that sell and stand out. Specializing in minimal, premium, and high-converting digital experiences.
+            Building epic visuals in the digital world. Specializing in pixel-perfect, high-converting experiences.
           </motion.p>
           
           <motion.div 
@@ -129,18 +130,20 @@ export const Hero = () => {
                 const element = document.querySelector('#work');
                 if (element) element.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="px-10 py-5 rounded-full bg-primary text-slate-900 font-bold uppercase tracking-widest hover:bg-slate-900 hover:text-primary transition-all glow-yellow flex items-center gap-3"
+              className="minecraft-btn-primary"
             >
               View Work
             </button>
             <button 
               onClick={openHirePanel}
-              className="px-10 py-5 rounded-full bg-primary text-slate-900 font-bold uppercase tracking-widest hover:bg-slate-900 hover:text-primary hover:scale-105 transition-all flex items-center gap-3 glow-yellow"
+              className="minecraft-btn-secondary"
             >
               Hire Now
             </button>
           </motion.div>
         </div>
+
+        {/* Character Visual Removed as per user request */}
       </div>
     </section>
   );
