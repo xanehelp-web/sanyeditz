@@ -104,12 +104,11 @@ export const HirePanel = ({ isOpen, onClose }: HirePanelProps) => {
                         <div className="flex items-center gap-2 mb-1">
                           <h3 className="text-foreground font-display text-xs truncate">{employee.name}</h3>
                           {employee.isOwner && (
-                            <span className="px-2 py-0.5 minecraft-border bg-primary/20 text-primary text-[8px] font-display uppercase tracking-normal">
+                            <span className="px-2 py-0.5 minecraft-border bg-dark/50 text-primary text-[8px] font-display uppercase tracking-normal">
                               Owner
                             </span>
                           )}
                         </div>
-                        <p className="text-primary text-[10px] font-display mb-1">{employee.role}</p>
                         <p className="text-slate-400 text-[10px] font-mono truncate">{employee.info}</p>
                       </div>
 
@@ -120,7 +119,7 @@ export const HirePanel = ({ isOpen, onClose }: HirePanelProps) => {
                         rel="noopener noreferrer"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
-                        className="w-12 h-12 minecraft-border bg-primary text-slate-900 flex items-center justify-center transition-all shrink-0"
+                        className="w-12 h-12 minecraft-border bg-primary text-slate-900 flex items-center justify-center transition-all shrink-0 hover:brightness-110"
                       >
                         <MessageCircle className="w-6 h-6 fill-current" />
                       </motion.a>

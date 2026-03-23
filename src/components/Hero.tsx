@@ -4,6 +4,8 @@ import { ArrowRight, Sparkles, Sun, Moon } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useHirePanel } from '../context/HirePanelContext';
+import { useModPacksPanel } from '../context/ModPacksPanelContext';
+import { useRobloxDeltaPanel } from '../context/RobloxDeltaPanelContext';
 
 export const Navbar = () => {
   const { openHirePanel } = useHirePanel();
@@ -81,6 +83,8 @@ export const Navbar = () => {
 
 export const Hero = () => {
   const { openHirePanel } = useHirePanel();
+  const { openModPacksPanel } = useModPacksPanel();
+  const { openRobloxDeltaPanel } = useRobloxDeltaPanel();
 
   return (
     <section id="home" className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-dark">
@@ -133,6 +137,18 @@ export const Hero = () => {
               className="minecraft-btn-primary"
             >
               View Work
+            </button>
+            <button 
+              onClick={openModPacksPanel}
+              className="minecraft-btn-primary"
+            >
+              Minecraft Mod Packs
+            </button>
+            <button 
+              onClick={openRobloxDeltaPanel}
+              className="minecraft-btn-primary"
+            >
+              Roblox Delta
             </button>
             <button 
               onClick={openHirePanel}

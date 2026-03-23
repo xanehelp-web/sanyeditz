@@ -14,9 +14,15 @@ import { CookiesPolicy } from './pages/CookiesPolicy';
 import { SEO } from './components/SEO';
 import { HirePanelProvider, useHirePanel } from './context/HirePanelContext';
 import { HirePanel } from './components/HirePanel';
+import { ModPacksPanelProvider, useModPacksPanel } from './context/ModPacksPanelContext';
+import { ModPacksPanel } from './components/ModPacksPanel';
+import { RobloxDeltaPanelProvider, useRobloxDeltaPanel } from './context/RobloxDeltaPanelContext';
+import { RobloxDeltaPanel } from './components/RobloxDeltaPanel';
 
 const Home = () => {
   const { isOpen, closeHirePanel } = useHirePanel();
+  const { isModPacksOpen, closeModPacksPanel } = useModPacksPanel();
+  const { isRobloxDeltaOpen, closeRobloxDeltaPanel } = useRobloxDeltaPanel();
   
   return (
     <div key="content">
@@ -31,6 +37,8 @@ const Home = () => {
       </main>
       <Footer />
       <HirePanel isOpen={isOpen} onClose={closeHirePanel} />
+      <ModPacksPanel isOpen={isModPacksOpen} onClose={closeModPacksPanel} />
+      <RobloxDeltaPanel isOpen={isRobloxDeltaOpen} onClose={closeRobloxDeltaPanel} />
     </div>
   );
 };
@@ -49,22 +57,26 @@ function App() {
   return (
     <HelmetProvider>
       <HirePanelProvider>
-        <HashRouter>
-          <div className="min-h-screen selection:bg-primary selection:text-dark">
-            <AnimatePresence mode="wait">
-              {isLoading ? (
-                <LoadingScreen onComplete={() => setIsLoading(false)} />
-              ) : (
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/privacy" element={<PrivacyPolicy />} />
-                  <Route path="/terms" element={<TermsConditions />} />
-                  <Route path="/cookies" element={<CookiesPolicy />} />
-                </Routes>
-              )}
-            </AnimatePresence>
-          </div>
-        </HashRouter>
+        <ModPacksPanelProvider>
+          <RobloxDeltaPanelProvider>
+            <HashRouter>
+              <div className="min-h-screen selection:bg-primary selection:text-dark">
+                <AnimatePresence mode="wait">
+                  {isLoading ? (
+                    <LoadingScreen onComplete={() => setIsLoading(false)} />
+                  ) : (
+                    <Routes>
+                      <Route path="/" element={<Home />} />
+                      <Route path="/privacy" element={<PrivacyPolicy />} />
+                      <Route path="/terms" element={<TermsConditions />} />
+                      <Route path="/cookies" element={<CookiesPolicy />} />
+                    </Routes>
+                  )}
+                </AnimatePresence>
+              </div>
+            </HashRouter>
+          </RobloxDeltaPanelProvider>
+        </ModPacksPanelProvider>
       </HirePanelProvider>
     </HelmetProvider>
   );
