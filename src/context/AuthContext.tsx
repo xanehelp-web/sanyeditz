@@ -120,7 +120,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           return;
         }
         if (error.code === 'auth/unauthorized-domain') {
-          setLoginError('Domain not authorized. Add this domain to Firebase console.');
+          setLoginError(`Domain not authorized: ${window.location.hostname}. Add this to Firebase console.`);
           return;
         }
         if (error.code === 'auth/operation-not-supported-in-this-environment') {
