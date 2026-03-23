@@ -48,8 +48,11 @@ interface AuthContextType {
   profile: UserProfile | null;
   loading: boolean;
   isAdmin: boolean;
+  loginError: string | null;
+  isLoggingIn: boolean;
   login: () => Promise<void>;
   logout: () => Promise<void>;
+  clearLoginError: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -58,6 +61,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<FirebaseUser | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -98,23 +103,41 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = async () => {
+    console.log('Login attempt started...');
+    setLoginError(null);
+    setIsLoggingIn(true);
     try {
       await signInWithPopup(auth, googleProvider);
+      console.log('Login successful!');
     } catch (error) {
       if (error instanceof FirebaseError) {
         if (error.code === 'auth/popup-closed-by-user') {
-          // User closed the popup, we can ignore this or show a subtle message
           console.log('Login popup closed by user');
           return;
         }
         if (error.code === 'auth/cancelled-popup-request') {
-          // Multiple popups opened, ignore
+          console.log('Login request cancelled (multiple attempts)');
           return;
         }
+        if (error.code === 'auth/unauthorized-domain') {
+          setLoginError('Domain not authorized. Add this domain to Firebase console.');
+          return;
+        }
+        if (error.code === 'auth/operation-not-supported-in-this-environment') {
+          setLoginError('Login not supported in this view. Please open in a new tab.');
+          return;
+        }
+        setLoginError(error.message);
+      } else {
+        setLoginError('An unexpected error occurred during login.');
       }
       console.error('Login Error:', error);
+    } finally {
+      setIsLoggingIn(false);
     }
   };
+
+  const clearLoginError = () => setLoginError(null);
 
   const logout = async () => {
     try {
@@ -127,7 +150,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const isAdmin = user?.email === 'riponkhen9@gmail.com';
 
   return (
-    <AuthContext.Provider value={{ user, profile, loading, isAdmin, login, logout }}>
+    <AuthContext.Provider value={{ user, profile, loading, isAdmin, loginError, isLoggingIn, login, logout, clearLoginError }}>
       {children}
     </AuthContext.Provider>
   );

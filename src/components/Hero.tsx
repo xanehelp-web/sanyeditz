@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Sparkles, Sun, Moon } from 'lucide-react';
+import { ArrowRight, Sparkles, Sun, Moon, X } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useHirePanel } from '../context/HirePanelContext';
@@ -10,7 +10,7 @@ import { useAuth } from '../context/AuthContext';
 
 export const Navbar = () => {
   const { openHirePanel } = useHirePanel();
-  const { user, login, logout, isAdmin } = useAuth();
+  const { user, login, logout, isAdmin, loginError, isLoggingIn, clearLoginError } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     if (typeof window !== 'undefined') {
@@ -99,12 +99,21 @@ export const Navbar = () => {
               )}
             </div>
           ) : (
-            <button
-              onClick={login}
-              className="text-[8px] md:text-[10px] font-display uppercase tracking-widest text-slate-400 hover:text-primary transition-colors"
-            >
-              Login
-            </button>
+            <div className="flex flex-col items-end gap-1">
+              <button
+                onClick={login}
+                disabled={isLoggingIn}
+                className="text-[8px] md:text-[10px] font-display uppercase tracking-widest text-slate-400 hover:text-primary transition-colors disabled:opacity-50"
+              >
+                {isLoggingIn ? 'Logging in...' : 'Login'}
+              </button>
+              {loginError && (
+                <div className="flex items-center gap-2">
+                  <span className="text-[6px] md:text-[8px] text-red-500 font-mono">{loginError}</span>
+                  <button onClick={clearLoginError} className="text-slate-500 hover:text-white"><X className="w-2 h-2" /></button>
+                </div>
+              )}
+            </div>
           )}
         </div>
       </div>
