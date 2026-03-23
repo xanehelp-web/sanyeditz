@@ -173,7 +173,7 @@ export const Portfolio = () => {
       {/* Modal */}
       <AnimatePresence>
         {selectedItem && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 md:p-8">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
             <SEO 
               title={`${selectedItem.title} | Portfolio`}
               description={selectedItem.description}
@@ -192,16 +192,16 @@ export const Portfolio = () => {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-6xl bg-dark minecraft-border overflow-hidden max-h-[95vh] md:max-h-[90vh] flex flex-col md:flex-row"
+              className="relative w-full max-w-6xl bg-dark border border-border rounded-3xl overflow-hidden max-h-[90vh] flex flex-col md:flex-row shadow-2xl"
             >
               <button 
                 onClick={() => setSelectedItem(null)}
-                className="absolute top-4 right-4 md:top-8 md:right-8 z-20 w-10 h-10 md:w-12 md:h-12 minecraft-border flex items-center justify-center text-foreground hover:bg-surface transition-all"
+                className="absolute top-4 right-4 md:top-8 md:right-8 z-20 w-10 h-10 md:w-12 md:h-12 bg-dark/50 backdrop-blur-md border border-border rounded-xl flex items-center justify-center text-foreground hover:bg-surface transition-all"
               >
                 <X className="w-5 h-5 md:w-6 md:h-6" />
               </button>
 
-              <div className="w-full md:w-3/5 h-[30vh] sm:h-[40vh] md:h-auto relative overflow-hidden">
+              <div className="w-full md:w-3/5 h-[250px] sm:h-[350px] md:h-auto relative overflow-hidden">
                 <img 
                   src={selectedItem.image} 
                   alt={selectedItem.title} 
@@ -211,7 +211,7 @@ export const Portfolio = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent md:bg-gradient-to-r" />
               </div>
               
-              <div className="w-full md:w-2/5 p-6 md:p-12 flex flex-col justify-center bg-dark overflow-y-auto">
+              <div className="w-full md:w-2/5 p-6 md:p-12 flex flex-col justify-center bg-dark overflow-y-auto custom-scrollbar">
                 <div className="space-y-6 md:space-y-8">
                   <div>
                     <span className="text-primary text-[8px] md:text-[10px] font-display uppercase tracking-normal mb-2 md:mb-4 block">

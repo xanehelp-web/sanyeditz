@@ -62,7 +62,7 @@ export const Navbar = () => {
           <span className="text-lg md:text-xl font-display tracking-wider text-primary">Sany</span>
         </Link>
 
-        <div className="flex items-center gap-2 md:gap-8">
+        <div className="flex items-center gap-1.5 md:gap-8">
           <button
             onClick={toggleTheme}
             className="p-1.5 md:p-2 rounded-full hover:bg-white/10 transition-colors text-slate-400 hover:text-primary"
@@ -73,44 +73,44 @@ export const Navbar = () => {
 
           <button
             onClick={openHirePanel}
-            className="minecraft-btn-primary !py-2 !px-3 md:!py-3 md:!px-4 text-[8px] md:text-[10px]"
+            className="minecraft-btn-primary !py-2 !px-2.5 md:!py-3 md:!px-4 text-[7px] md:text-[10px]"
           >
             Hire Now
           </button>
 
           {user ? (
-            <div className="flex items-center gap-2 md:gap-4">
+            <div className="flex items-center gap-1.5 md:gap-4">
               {isAdmin && (
                 <button
                   onClick={() => navigate('/admin')}
-                  className="text-[8px] md:text-[10px] font-display uppercase tracking-widest text-primary hover:text-white transition-colors"
+                  className="text-[7px] md:text-[10px] font-display uppercase tracking-widest text-primary hover:text-white transition-colors"
                 >
                   Admin
                 </button>
               )}
               <button
                 onClick={logout}
-                className="text-[8px] md:text-[10px] font-display uppercase tracking-widest text-slate-400 hover:text-primary transition-colors"
+                className="text-[7px] md:text-[10px] font-display uppercase tracking-widest text-slate-400 hover:text-primary transition-colors"
               >
                 Logout
               </button>
               {user.photoURL && (
-                <img src={user.photoURL} alt="" className="w-6 h-6 md:w-8 md:h-8 rounded-full border border-primary/20" />
+                <img src={user.photoURL} alt="" className="w-5 h-5 md:w-8 md:h-8 rounded-full border border-primary/20" />
               )}
             </div>
           ) : (
-            <div className="flex flex-col items-end gap-1">
+            <div className="flex flex-col items-end gap-0.5">
               <button
                 onClick={login}
                 disabled={isLoggingIn}
-                className="text-[8px] md:text-[10px] font-display uppercase tracking-widest text-slate-400 hover:text-primary transition-colors disabled:opacity-50"
+                className="text-[7px] md:text-[10px] font-display uppercase tracking-widest text-slate-400 hover:text-primary transition-colors disabled:opacity-50"
               >
-                {isLoggingIn ? 'Logging in...' : 'Login'}
+                {isLoggingIn ? '...' : 'Login'}
               </button>
               {loginError && (
-                <div className="flex items-center gap-2">
-                  <span className="text-[6px] md:text-[8px] text-red-500 font-mono">{loginError}</span>
-                  <button onClick={clearLoginError} className="text-slate-500 hover:text-white"><X className="w-2 h-2" /></button>
+                <div className="flex items-center gap-1">
+                  <span className="text-[5px] md:text-[8px] text-red-500 font-mono max-w-[60px] truncate">{loginError}</span>
+                  <button onClick={clearLoginError} className="text-slate-500 hover:text-white"><X className="w-1.5 h-1.5" /></button>
                 </div>
               )}
             </div>
@@ -167,32 +167,32 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-wrap justify-center md:justify-start gap-3 md:gap-6"
+            className="flex flex-col sm:flex-row flex-wrap justify-center md:justify-start gap-3 md:gap-6"
           >
             <button 
               onClick={() => {
                 const element = document.querySelector('#work');
                 if (element) element.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="minecraft-btn-primary text-[8px] md:text-[10px] !py-2 !px-3 md:!py-3 md:!px-4"
+              className="minecraft-btn-primary text-[10px] md:text-[12px] !py-3 !px-4 md:!py-4 md:!px-6 w-full sm:w-auto"
             >
               View Work
             </button>
             <button 
               onClick={openModPacksPanel}
-              className="minecraft-btn-primary text-[8px] md:text-[10px] !py-2 !px-3 md:!py-3 md:!px-4"
+              className="minecraft-btn-primary text-[10px] md:text-[12px] !py-3 !px-4 md:!py-4 md:!px-6 w-full sm:w-auto"
             >
               Minecraft Mod Packs
             </button>
             <button 
               onClick={openRobloxDeltaPanel}
-              className="minecraft-btn-primary text-[8px] md:text-[10px] !py-2 !px-3 md:!py-3 md:!px-4"
+              className="minecraft-btn-primary text-[10px] md:text-[12px] !py-3 !px-4 md:!py-4 md:!px-6 w-full sm:w-auto"
             >
               Roblox Delta
             </button>
             <button 
               onClick={openHirePanel}
-              className="minecraft-btn-secondary text-[8px] md:text-[10px] !py-2 !px-3 md:!py-3 md:!px-4"
+              className="minecraft-btn-secondary text-[10px] md:text-[12px] !py-3 !px-4 md:!py-4 md:!px-6 w-full sm:w-auto"
             >
               Hire Now
             </button>

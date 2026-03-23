@@ -53,7 +53,63 @@ function App() {
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2000);
-    return () => clearTimeout(timer);
+
+    // Security measures
+    const handleContextMenu = (e: MouseEvent) => {
+      e.preventDefault();
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // F12
+      if (e.key === 'F12') {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C, Ctrl+Shift+K
+      if (e.ctrlKey && e.shiftKey && ['I', 'J', 'C', 'K'].includes(e.key.toUpperCase())) {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+U (View Source)
+      if (e.ctrlKey && e.key.toLowerCase() === 'u') {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+S (Save Page)
+      if (e.ctrlKey && e.key.toLowerCase() === 's') {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+P (Print)
+      if (e.ctrlKey && e.key.toLowerCase() === 'p') {
+        e.preventDefault();
+        return false;
+      }
+    };
+
+    const handleDragStart = (e: DragEvent) => {
+      e.preventDefault();
+    };
+
+    const handleCopy = (e: ClipboardEvent) => {
+      e.preventDefault();
+      return false;
+    };
+
+    document.addEventListener('contextmenu', handleContextMenu);
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('dragstart', handleDragStart);
+    document.addEventListener('copy', handleCopy);
+    document.addEventListener('cut', handleCopy);
+
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener('contextmenu', handleContextMenu);
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('dragstart', handleDragStart);
+      document.removeEventListener('copy', handleCopy);
+      document.removeEventListener('cut', handleCopy);
+    };
   }, []);
 
   return (
@@ -63,7 +119,7 @@ function App() {
           <ModPacksPanelProvider>
             <RobloxDeltaPanelProvider>
               <HashRouter>
-                <div className="min-h-screen selection:bg-primary selection:text-dark">
+                <div className="min-h-screen">
                   <AnimatePresence mode="wait">
                     {isLoading ? (
                       <LoadingScreen onComplete={() => setIsLoading(false)} />

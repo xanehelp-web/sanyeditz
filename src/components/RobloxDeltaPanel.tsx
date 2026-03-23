@@ -51,31 +51,31 @@ export const RobloxDeltaPanel = ({ isOpen, onClose }: RobloxDeltaPanelProps) => 
           />
 
           {/* Panel */}
-          <motion.div
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed top-0 right-0 z-[101] h-full w-full md:max-w-md bg-dark minecraft-border shadow-2xl flex flex-col"
-          >
-            {/* Header */}
-            <div className="p-6 border-b-4 border-black flex items-center justify-between bg-primary/5">
-              <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="px-2 py-0.5 bg-primary text-dark text-[8px] font-display uppercase animate-pulse">New Version</span>
-                  <span className="text-[10px] font-mono text-primary/60">v2.6.4</span>
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed top-0 right-0 z-[101] h-full w-full md:max-w-md bg-dark border-l-4 border-black shadow-2xl flex flex-col overflow-hidden"
+            >
+              {/* Header */}
+              <div className="p-6 border-b-4 border-black flex items-center justify-between bg-primary/5 backdrop-blur-xl">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="px-2 py-0.5 bg-primary text-dark text-[8px] font-display uppercase animate-pulse">New Version</span>
+                    <span className="text-[10px] font-mono text-primary/60">v2.6.4</span>
+                  </div>
+                  <h2 className="text-xl md:text-2xl font-display text-foreground">
+                    Roblox <span className="text-primary">Delta</span>
+                  </h2>
                 </div>
-                <h2 className="text-2xl font-display text-foreground">
-                  Roblox <span className="text-primary">Delta</span>
-                </h2>
+                <button
+                  onClick={onClose}
+                  className="p-2 minecraft-border text-slate-400 hover:text-foreground transition-all"
+                >
+                  <X className="w-6 h-6" />
+                </button>
               </div>
-              <button
-                onClick={onClose}
-                className="p-2 minecraft-border text-slate-400 hover:text-foreground transition-all"
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </div>
 
             {/* Content */}
             <div className="flex-1 overflow-y-auto p-6 space-y-6">

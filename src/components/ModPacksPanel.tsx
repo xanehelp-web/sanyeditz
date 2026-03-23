@@ -76,25 +76,25 @@ export const ModPacksPanel = ({ isOpen, onClose }: ModPacksPanelProps) => {
           />
 
           {/* Panel */}
-          <motion.div
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed top-0 right-0 z-[101] h-full w-full md:max-w-md bg-dark minecraft-border shadow-2xl flex flex-col"
-          >
-            {/* Header */}
-            <div className="p-6 border-b-4 border-black flex items-center justify-between">
-              <h2 className="text-2xl font-display text-foreground">
-                Minecraft <span className="text-primary">Mod Packs</span>
-              </h2>
-              <button
-                onClick={onClose}
-                className="p-2 minecraft-border text-slate-400 hover:text-foreground transition-all"
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </div>
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed top-0 right-0 z-[101] h-full w-full md:max-w-md bg-dark border-l-4 border-black shadow-2xl flex flex-col overflow-hidden"
+            >
+              {/* Header */}
+              <div className="p-6 border-b-4 border-black flex items-center justify-between bg-dark/50 backdrop-blur-xl">
+                <h2 className="text-xl md:text-2xl font-display text-foreground">
+                  Minecraft <span className="text-primary">Mod Packs</span>
+                </h2>
+                <button
+                  onClick={onClose}
+                  className="p-2 minecraft-border text-slate-400 hover:text-foreground transition-all"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
 
             {/* Content */}
             <div className="flex-1 overflow-y-auto p-6 space-y-6">

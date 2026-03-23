@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { cn } from '../lib/utils';
 import { useAuth } from '../context/AuthContext';
 import { Navigate } from 'react-router-dom';
 import { collection, query, orderBy, addDoc, deleteDoc, doc, serverTimestamp, updateDoc, writeBatch } from 'firebase/firestore';
@@ -71,6 +72,8 @@ export const AdminDashboard = () => {
 
     migrateIfNeeded();
   }, [isAdmin, portfolioSnapshot, servicesSnapshot, migrationAttempted]);
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   if (loading) return <div className="min-h-screen bg-dark flex items-center justify-center text-primary">Loading...</div>;
   if (!isAdmin) return <Navigate to="/" />;
@@ -196,10 +199,26 @@ export const AdminDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark text-foreground font-mono">
+    <div className="min-h-screen bg-dark text-foreground font-mono flex flex-col md:flex-row">
+      {/* Mobile Header */}
+      <div className="md:hidden flex items-center justify-between p-4 bg-surface border-b border-border sticky top-0 z-[60]">
+        <Link to="/" className="text-xl font-display text-primary flex items-center gap-2">
+          <ArrowLeft className="w-4 h-4" /> Admin
+        </Link>
+        <button 
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          className="p-2 bg-primary/10 text-primary rounded-lg"
+        >
+          {isSidebarOpen ? <X className="w-6 h-6" /> : <Settings className="w-6 h-6" />}
+        </button>
+      </div>
+
       {/* Sidebar */}
-      <div className="fixed left-0 top-0 h-full w-64 bg-surface border-r border-border p-6 flex flex-col z-50">
-        <div className="mb-12">
+      <div className={cn(
+        "fixed inset-y-0 left-0 w-64 bg-surface border-r border-border p-6 flex flex-col z-50 transition-transform duration-300 md:translate-x-0 md:static md:h-screen",
+        isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+      )}>
+        <div className="hidden md:block mb-12">
           <Link to="/" className="text-2xl font-display text-primary flex items-center gap-2">
             <ArrowLeft className="w-5 h-5" /> Admin
           </Link>
@@ -207,19 +226,19 @@ export const AdminDashboard = () => {
 
         <nav className="flex-grow space-y-4">
           <button
-            onClick={() => setActiveTab('messages')}
+            onClick={() => { setActiveTab('messages'); setIsSidebarOpen(false); }}
             className={`w-full flex items-center gap-3 p-3 rounded-xl transition-colors ${activeTab === 'messages' ? 'bg-primary text-dark font-bold' : 'text-slate-400 hover:bg-white/5'}`}
           >
             <MessageSquare className="w-5 h-5" /> Messages
           </button>
           <button
-            onClick={() => setActiveTab('portfolio')}
+            onClick={() => { setActiveTab('portfolio'); setIsSidebarOpen(false); }}
             className={`w-full flex items-center gap-3 p-3 rounded-xl transition-colors ${activeTab === 'portfolio' ? 'bg-primary text-dark font-bold' : 'text-slate-400 hover:bg-white/5'}`}
           >
             <Briefcase className="w-5 h-5" /> Portfolio
           </button>
           <button
-            onClick={() => setActiveTab('services')}
+            onClick={() => { setActiveTab('services'); setIsSidebarOpen(false); }}
             className={`w-full flex items-center gap-3 p-3 rounded-xl transition-colors ${activeTab === 'services' ? 'bg-primary text-dark font-bold' : 'text-slate-400 hover:bg-white/5'}`}
           >
             <Settings className="w-5 h-5" /> Services
@@ -234,28 +253,38 @@ export const AdminDashboard = () => {
         </button>
       </div>
 
+      {/* Backdrop for mobile sidebar */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 z-40 md:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       {/* Main Content */}
-      <div className="ml-64 p-12">
-        <header className="mb-12 flex justify-between items-center">
-          <h1 className="text-4xl font-display text-primary uppercase tracking-widest">
+      <div className="flex-1 p-4 md:p-12 overflow-x-hidden">
+        <header className="mb-8 md:mb-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <h1 className="text-2xl md:text-4xl font-display text-primary uppercase tracking-widest">
             {activeTab === 'messages' ? 'Inbound Messages' : activeTab === 'portfolio' ? 'Manage Portfolio' : 'Manage Services'}
           </h1>
-          {activeTab === 'portfolio' && (
-            <button 
-              onClick={() => setIsAddingProject(true)}
-              className="minecraft-btn-primary flex items-center gap-2"
-            >
-              <Plus className="w-4 h-4" /> Add Project
-            </button>
-          )}
-          {activeTab === 'services' && (
-            <button 
-              onClick={() => setIsAddingService(true)}
-              className="minecraft-btn-primary flex items-center gap-2"
-            >
-              <Plus className="w-4 h-4" /> Add Service
-            </button>
-          )}
+          <div className="flex gap-2 w-full md:w-auto">
+            {activeTab === 'portfolio' && (
+              <button 
+                onClick={() => setIsAddingProject(true)}
+                className="minecraft-btn-primary flex-1 md:flex-none flex items-center justify-center gap-2 text-xs md:text-sm"
+              >
+                <Plus className="w-4 h-4" /> Add Project
+              </button>
+            )}
+            {activeTab === 'services' && (
+              <button 
+                onClick={() => setIsAddingService(true)}
+                className="minecraft-btn-primary flex-1 md:flex-none flex items-center justify-center gap-2 text-xs md:text-sm"
+              >
+                <Plus className="w-4 h-4" /> Add Service
+              </button>
+            )}
+          </div>
         </header>
 
         {activeTab === 'messages' && (
@@ -390,7 +419,7 @@ export const AdminDashboard = () => {
               </button>
               <h2 className="text-2xl font-display text-primary mb-8">Add New Project</h2>
               <form onSubmit={handleAddProject} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <label className="text-[10px] uppercase text-slate-500">Title</label>
                     <input name="title" required className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-sm" placeholder="Project Title" />
@@ -405,7 +434,7 @@ export const AdminDashboard = () => {
                     </select>
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <label className="text-[10px] uppercase text-slate-500">Image URL</label>
                     <input name="image" className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-sm" placeholder="https://..." />
@@ -421,7 +450,7 @@ export const AdminDashboard = () => {
                       />
                       <div className="w-full bg-surface border border-dashed border-border rounded-xl px-4 py-3 text-sm flex items-center gap-2 text-slate-400 group-hover:border-primary group-hover:text-primary transition-all">
                         <Upload className="w-4 h-4" />
-                        <span>Choose file...</span>
+                        <span className="truncate">Choose file...</span>
                       </div>
                     </div>
                   </div>
@@ -434,7 +463,7 @@ export const AdminDashboard = () => {
                   <label className="text-[10px] uppercase text-slate-500">Tools (comma separated)</label>
                   <input name="tools" required className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-sm" placeholder="Photoshop, Figma, etc." />
                 </div>
-                <div className="grid grid-cols-3 gap-4 items-end">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
                   <div className="space-y-1">
                     <label className="text-[10px] uppercase text-slate-500">Price</label>
                     <input name="price" type="number" className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-sm" placeholder="0" />
@@ -481,7 +510,7 @@ export const AdminDashboard = () => {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-2xl bg-dark border border-border rounded-3xl p-8 overflow-hidden"
+              className="relative w-full max-w-2xl bg-dark border border-border rounded-3xl p-6 md:p-8 overflow-y-auto max-h-[90vh]"
             >
               <button
                 onClick={() => setEditingProject(null)}
@@ -491,7 +520,7 @@ export const AdminDashboard = () => {
               </button>
               <h2 className="text-2xl font-display text-primary mb-8">Edit Project</h2>
               <form onSubmit={handleUpdateProject} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <label className="text-[10px] uppercase text-slate-500">Title</label>
                     <input name="title" defaultValue={editingProject.title} required className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-sm" />
@@ -506,7 +535,7 @@ export const AdminDashboard = () => {
                     </select>
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <label className="text-[10px] uppercase text-slate-500">Image URL</label>
                     <input name="image" defaultValue={editingProject.image} className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-sm" />
@@ -522,7 +551,7 @@ export const AdminDashboard = () => {
                       />
                       <div className="w-full bg-surface border border-dashed border-border rounded-xl px-4 py-3 text-sm flex items-center gap-2 text-slate-400 group-hover:border-primary group-hover:text-primary transition-all">
                         <Upload className="w-4 h-4" />
-                        <span>Choose file...</span>
+                        <span className="truncate">Choose file...</span>
                       </div>
                     </div>
                   </div>
@@ -535,7 +564,7 @@ export const AdminDashboard = () => {
                   <label className="text-[10px] uppercase text-slate-500">Tools (comma separated)</label>
                   <input name="tools" defaultValue={editingProject.tools?.join(', ')} required className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-sm" />
                 </div>
-                <div className="grid grid-cols-3 gap-4 items-end">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
                   <div className="space-y-1">
                     <label className="text-[10px] uppercase text-slate-500">Price</label>
                     <input name="price" type="number" defaultValue={editingProject.price} className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-sm" />
@@ -582,7 +611,7 @@ export const AdminDashboard = () => {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-2xl bg-dark border border-border rounded-3xl p-8 overflow-hidden"
+              className="relative w-full max-w-2xl bg-dark border border-border rounded-3xl p-6 md:p-8 overflow-y-auto max-h-[90vh]"
             >
               <button
                 onClick={() => setIsAddingService(false)}
@@ -592,7 +621,7 @@ export const AdminDashboard = () => {
               </button>
               <h2 className="text-2xl font-display text-primary mb-8">Add New Service</h2>
               <form onSubmit={handleAddService} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <label className="text-[10px] uppercase text-slate-500">Title</label>
                     <input name="title" required className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-sm" placeholder="Service Title" />
@@ -610,7 +639,7 @@ export const AdminDashboard = () => {
                   <label className="text-[10px] uppercase text-slate-500">Features (comma separated)</label>
                   <input name="features" required className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-sm" placeholder="Feature 1, Feature 2, etc." />
                 </div>
-                <div className="grid grid-cols-2 gap-4 items-end">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
                   <div className="space-y-1">
                     <label className="text-[10px] uppercase text-slate-500">Icon Name (Lucide)</label>
                     <input name="icon" required className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-sm" placeholder="Settings, Mail, etc." />
@@ -642,7 +671,7 @@ export const AdminDashboard = () => {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-2xl bg-dark border border-border rounded-3xl p-8 overflow-hidden"
+              className="relative w-full max-w-2xl bg-dark border border-border rounded-3xl p-6 md:p-8 overflow-y-auto max-h-[90vh]"
             >
               <button
                 onClick={() => setEditingService(null)}
@@ -652,7 +681,7 @@ export const AdminDashboard = () => {
               </button>
               <h2 className="text-2xl font-display text-primary mb-8">Edit Service</h2>
               <form onSubmit={handleUpdateService} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <label className="text-[10px] uppercase text-slate-500">Title</label>
                     <input name="title" defaultValue={editingService.title} required className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-sm" />
@@ -670,7 +699,7 @@ export const AdminDashboard = () => {
                   <label className="text-[10px] uppercase text-slate-500">Features (comma separated)</label>
                   <input name="features" defaultValue={editingService.features?.join(', ')} required className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-sm" />
                 </div>
-                <div className="grid grid-cols-2 gap-4 items-end">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
                   <div className="space-y-1">
                     <label className="text-[10px] uppercase text-slate-500">Icon Name (Lucide)</label>
                     <input name="icon" defaultValue={editingService.icon} required className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-sm" />

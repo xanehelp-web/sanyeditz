@@ -24,7 +24,7 @@ export const Store = () => {
             <ShoppingCart className="w-3 h-3" />
             <span>Digital Assets & Resources</span>
           </motion.div>
-          <h2 className="text-5xl md:text-7xl font-display font-black mb-6">
+          <h2 className="text-4xl md:text-7xl font-display font-black mb-6">
             Sell Your <span className="text-gradient">Work</span>
           </h2>
           <p className="text-slate-400 max-w-2xl mx-auto font-medium">
