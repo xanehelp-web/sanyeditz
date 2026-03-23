@@ -6,9 +6,11 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useHirePanel } from '../context/HirePanelContext';
 import { useModPacksPanel } from '../context/ModPacksPanelContext';
 import { useRobloxDeltaPanel } from '../context/RobloxDeltaPanelContext';
+import { useAuth } from '../context/AuthContext';
 
 export const Navbar = () => {
   const { openHirePanel } = useHirePanel();
+  const { user, login, logout, isAdmin } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     if (typeof window !== 'undefined') {
@@ -75,6 +77,35 @@ export const Navbar = () => {
           >
             Hire Now
           </button>
+
+          {user ? (
+            <div className="flex items-center gap-2 md:gap-4">
+              {isAdmin && (
+                <button
+                  onClick={() => navigate('/admin')}
+                  className="text-[8px] md:text-[10px] font-display uppercase tracking-widest text-primary hover:text-white transition-colors"
+                >
+                  Admin
+                </button>
+              )}
+              <button
+                onClick={logout}
+                className="text-[8px] md:text-[10px] font-display uppercase tracking-widest text-slate-400 hover:text-primary transition-colors"
+              >
+                Logout
+              </button>
+              {user.photoURL && (
+                <img src={user.photoURL} alt="" className="w-6 h-6 md:w-8 md:h-8 rounded-full border border-primary/20" />
+              )}
+            </div>
+          ) : (
+            <button
+              onClick={login}
+              className="text-[8px] md:text-[10px] font-display uppercase tracking-widest text-slate-400 hover:text-primary transition-colors"
+            >
+              Login
+            </button>
+          )}
         </div>
       </div>
     </nav>

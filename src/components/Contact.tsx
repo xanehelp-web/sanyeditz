@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Phone, MessageSquare, Facebook, Sparkles } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
 import { Link } from 'react-router-dom';
 
@@ -17,25 +19,17 @@ export const Contact = () => {
 
   const onSubmit = async (data: any) => {
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+      await addDoc(collection(db, 'messages'), {
+        ...data,
+        createdAt: serverTimestamp(),
       });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to send message');
-      }
 
       setIsSuccess(true);
       reset();
       setTimeout(() => setIsSuccess(false), 5000);
     } catch (error) {
       console.error('Form Submission Error:', error);
-      alert(error instanceof Error ? error.message : 'Something went wrong. Please try again later.');
+      alert('Something went wrong. Please try again later.');
       triggerShake();
     }
   };

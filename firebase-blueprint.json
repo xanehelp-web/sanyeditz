@@ -1,0 +1,80 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and role information.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "user"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "PortfolioItem": {
+      "title": "Portfolio Item",
+      "description": "A project in the portfolio.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "image": { "type": "string" },
+        "description": { "type": "string" },
+        "tools": { "type": "array", "items": { "type": "string" } },
+        "price": { "type": "number" },
+        "sellable": { "type": "boolean" },
+        "featured": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "category", "image", "description"]
+    },
+    "Service": {
+      "title": "Service",
+      "description": "A design service offering.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "string" },
+        "icon": { "type": "string" },
+        "features": { "type": "array", "items": { "type": "string" } },
+        "popular": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "description", "price", "icon", "features"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "A contact form submission.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "message": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "email", "message"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles."
+    },
+    "/portfolio/{itemId}": {
+      "schema": "PortfolioItem",
+      "description": "Portfolio projects."
+    },
+    "/services/{serviceId}": {
+      "schema": "Service",
+      "description": "Service offerings."
+    },
+    "/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Contact form messages."
+    }
+  }
+}

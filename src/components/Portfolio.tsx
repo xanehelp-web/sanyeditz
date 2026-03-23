@@ -5,8 +5,11 @@ import { PORTFOLIO_ITEMS } from '../constants';
 import { cn } from '../lib/utils';
 import { SEO } from './SEO';
 import { useHirePanel } from '../context/HirePanelContext';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import { collection, query, orderBy } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
-const ProjectCard = ({ item, onClick }: { item: typeof PORTFOLIO_ITEMS[0], onClick: () => void, key?: React.Key }) => {
+const ProjectCard = ({ item, onClick }: { item: any, onClick: () => void, key?: React.Key }) => {
   const itemVariants = {
     hidden: { opacity: 0, y: 20, scale: 0.95 },
     show: { 
@@ -70,13 +73,18 @@ const ProjectCard = ({ item, onClick }: { item: typeof PORTFOLIO_ITEMS[0], onCli
 export const Portfolio = () => {
   const { openHirePanel } = useHirePanel();
   const [filter, setFilter] = useState('All');
-  const [selectedItem, setSelectedItem] = useState<typeof PORTFOLIO_ITEMS[0] | null>(null);
+  const [selectedItem, setSelectedItem] = useState<any | null>(null);
+
+  const [portfolioSnapshot] = useCollection(query(collection(db, 'portfolio'), orderBy('createdAt', 'desc')));
+  const portfolioItems = portfolioSnapshot?.docs.map(doc => ({ id: doc.id, ...doc.data() })) || [];
+  
+  const itemsToDisplay = portfolioItems.length > 0 ? portfolioItems : PORTFOLIO_ITEMS;
 
   const categories = ['All', 'Logo Design', 'UI/UX', 'Thumbnails', 'Social Media'];
   
   const filteredItems = filter === 'All' 
-    ? PORTFOLIO_ITEMS 
-    : PORTFOLIO_ITEMS.filter(item => item.category === filter);
+    ? itemsToDisplay 
+    : itemsToDisplay.filter((item: any) => item.category === filter);
 
   const containerVariants = {
     hidden: { opacity: 0 },

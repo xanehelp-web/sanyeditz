@@ -4,9 +4,15 @@ import { Check, Star, Quote, ArrowRight, Zap, Shield, Sparkles, CreditCard } fro
 import { SERVICES, TESTIMONIALS } from '../constants';
 import { cn } from '../lib/utils';
 import { useHirePanel } from '../context/HirePanelContext';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import { collection } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
 export const Services = () => {
   const { openHirePanel } = useHirePanel();
+  const [servicesSnapshot] = useCollection(collection(db, 'services'));
+  const servicesItems = servicesSnapshot?.docs.map(doc => ({ id: doc.id, ...doc.data() })) || [];
+  const itemsToDisplay = servicesItems.length > 0 ? servicesItems : SERVICES;
 
   return (
     <section id="services" className="py-16 md:py-24 px-4 md:px-6 bg-dark relative overflow-hidden">
@@ -22,7 +28,7 @@ export const Services = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          {SERVICES.map((service) => (
+          {itemsToDisplay.map((service: any) => (
             <motion.div
               key={service.id}
               initial={{ opacity: 0, y: 20 }}
@@ -31,16 +37,18 @@ export const Services = () => {
               className="relative bg-surface minecraft-border p-8 flex flex-col h-full transition-all duration-500"
             >
               <div className="mb-8">
-                <h3 className="text-xl font-display text-foreground mb-4">{service.tier}</h3>
+                <h3 className="text-xl font-display text-foreground mb-4">{service.title || service.tier}</h3>
                 <p className="text-slate-400 text-xs font-mono mb-6">{service.description}</p>
                 <div className="flex items-baseline gap-1 mb-4">
                   <span className="text-3xl font-display text-primary">{service.price}</span>
                   <span className="text-slate-500 text-[10px] font-display uppercase tracking-normal">/ Project</span>
                 </div>
-                <div className="flex items-center gap-2 text-primary text-[10px] font-display uppercase tracking-normal">
-                  <Zap className="w-3 h-3" />
-                  Delivery: {service.delivery}
-                </div>
+                {service.delivery && (
+                  <div className="flex items-center gap-2 text-primary text-[10px] font-display uppercase tracking-normal">
+                    <Zap className="w-3 h-3" />
+                    Delivery: {service.delivery}
+                  </div>
+                )}
               </div>
 
               <ul className="space-y-4 mb-10 flex-grow">
