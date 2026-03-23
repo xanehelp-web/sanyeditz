@@ -97,21 +97,22 @@ export const Portfolio = () => {
   };
 
   return (
-    <section id="work" className="py-32 bg-dark relative overflow-hidden">
+    <section id="work" className="py-16 md:py-32 bg-dark relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-full bg-grid-pattern opacity-5 pointer-events-none" />
       
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8 mb-12 md:mb-16">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
+            className="text-center md:text-left"
           >
-            <div className="flex items-center gap-2 text-primary font-display uppercase tracking-normal text-[10px] mb-4">
+            <div className="flex items-center justify-center md:justify-start gap-2 text-primary font-display uppercase tracking-normal text-[8px] md:text-[10px] mb-4">
               <Sparkles className="w-3 h-3" />
               Showcase
             </div>
-            <h2 className="text-3xl md:text-5xl font-display text-foreground leading-none">
+            <h2 className="text-2xl md:text-5xl font-display text-foreground leading-none">
               Selected <span className="text-gradient">Work</span>
             </h2>
           </motion.div>
@@ -120,14 +121,14 @@ export const Portfolio = () => {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="flex flex-wrap gap-2"
+            className="flex flex-wrap justify-center md:justify-end gap-2"
           >
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setFilter(cat)}
                 className={cn(
-                  "minecraft-btn",
+                  "minecraft-btn text-[10px] md:text-xs px-3 py-1.5 md:px-4 md:py-2",
                   filter === cat 
                     ? "bg-primary text-slate-900" 
                     : "bg-surface text-slate-400 hover:text-foreground"
@@ -139,7 +140,7 @@ export const Portfolio = () => {
           </motion.div>
         </div>
 
-        <div className="min-h-[600px]">
+        <div className="min-h-[400px] md:min-h-[600px]">
           <AnimatePresence mode="wait">
             <motion.div
               key={filter}
@@ -147,7 +148,7 @@ export const Portfolio = () => {
               initial="hidden"
               animate="show"
               exit="exit"
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6"
             >
               {filteredItems.map((item) => (
                 <ProjectCard 
@@ -164,7 +165,7 @@ export const Portfolio = () => {
       {/* Modal */}
       <AnimatePresence>
         {selectedItem && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 md:p-8">
             <SEO 
               title={`${selectedItem.title} | Portfolio`}
               description={selectedItem.description}
@@ -183,16 +184,16 @@ export const Portfolio = () => {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-6xl bg-dark minecraft-border overflow-hidden max-h-[90vh] flex flex-col md:flex-row"
+              className="relative w-full max-w-6xl bg-dark minecraft-border overflow-hidden max-h-[95vh] md:max-h-[90vh] flex flex-col md:flex-row"
             >
               <button 
                 onClick={() => setSelectedItem(null)}
-                className="absolute top-8 right-8 z-20 w-12 h-12 minecraft-border flex items-center justify-center text-foreground hover:bg-surface transition-all"
+                className="absolute top-4 right-4 md:top-8 md:right-8 z-20 w-10 h-10 md:w-12 md:h-12 minecraft-border flex items-center justify-center text-foreground hover:bg-surface transition-all"
               >
-                <X className="w-6 h-6" />
+                <X className="w-5 h-5 md:w-6 md:h-6" />
               </button>
 
-              <div className="w-full md:w-3/5 h-[40vh] md:h-auto relative overflow-hidden">
+              <div className="w-full md:w-3/5 h-[30vh] sm:h-[40vh] md:h-auto relative overflow-hidden">
                 <img 
                   src={selectedItem.image} 
                   alt={selectedItem.title} 
@@ -202,38 +203,38 @@ export const Portfolio = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent md:bg-gradient-to-r" />
               </div>
               
-              <div className="w-full md:w-2/5 p-8 md:p-12 flex flex-col justify-center bg-dark">
-                <div className="space-y-8">
+              <div className="w-full md:w-2/5 p-6 md:p-12 flex flex-col justify-center bg-dark overflow-y-auto">
+                <div className="space-y-6 md:space-y-8">
                   <div>
-                    <span className="text-primary text-[10px] font-display uppercase tracking-normal mb-4 block">
+                    <span className="text-primary text-[8px] md:text-[10px] font-display uppercase tracking-normal mb-2 md:mb-4 block">
                       {selectedItem.category}
                     </span>
-                    <h3 className="text-2xl md:text-4xl font-display text-foreground leading-tight mb-6">
+                    <h3 className="text-xl md:text-4xl font-display text-foreground leading-tight mb-4 md:mb-6">
                       {selectedItem.title}
                     </h3>
-                    <p className="text-slate-400 text-sm font-mono leading-relaxed">
+                    <p className="text-slate-400 text-xs md:text-sm font-mono leading-relaxed">
                       {selectedItem.description}
                     </p>
                   </div>
 
                   <div>
-                    <h4 className="text-foreground text-[10px] font-display uppercase tracking-normal mb-4">Tools & Tech</h4>
+                    <h4 className="text-foreground text-[8px] md:text-[10px] font-display uppercase tracking-normal mb-3 md:mb-4">Tools & Tech</h4>
                     <div className="flex flex-wrap gap-2">
                       {selectedItem.tools.map(tool => (
-                        <span key={tool} className="px-4 py-2 minecraft-border text-[8px] font-display uppercase tracking-normal text-slate-300">
+                        <span key={tool} className="px-3 py-1.5 md:px-4 md:py-2 minecraft-border text-[7px] md:text-[8px] font-display uppercase tracking-normal text-slate-300">
                           {tool}
                         </span>
                       ))}
                     </div>
                   </div>
 
-                  <div className="pt-8 flex flex-wrap gap-4">
+                  <div className="pt-4 md:pt-8 flex flex-wrap gap-4">
                     <button 
                       onClick={() => {
                         setSelectedItem(null);
                         openHirePanel();
                       }}
-                      className="minecraft-btn-primary flex items-center gap-3"
+                      className="minecraft-btn-primary flex items-center gap-3 text-xs md:text-sm"
                     >
                       Hire Now
                       <ArrowRight className="w-4 h-4" />

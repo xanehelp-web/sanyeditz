@@ -15,21 +15,22 @@ export const About = () => {
   };
 
   return (
-    <section id="about" className="py-24 px-6 bg-dark">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center">
+    <section id="about" className="py-16 md:py-24 px-4 md:px-6 bg-dark">
+      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 md:gap-20 items-center">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
+          className="text-center md:text-left"
         >
-          <p className="text-primary font-display text-xs mb-4">About Me</p>
-          <h2 className="text-4xl md:text-6xl font-display mb-8">
+          <p className="text-primary font-display text-[10px] md:text-xs mb-4">About Me</p>
+          <h2 className="text-3xl md:text-6xl font-display mb-6 md:mb-8">
             Creative <span className="text-primary">Designer</span>
           </h2>
-          <p className="text-slate-400 text-base font-mono leading-relaxed mb-8">
+          <p className="text-slate-400 text-sm md:text-base font-mono leading-relaxed mb-6 md:mb-8">
             Hi, I’m Sany. I’m a professional creative designer dedicated to crafting visuals that don’t just look good but drive results. With a focus on modern aesthetics and clean UI, I help brands stand out in the digital space.
           </p>
-          <p className="text-slate-400 text-base font-mono leading-relaxed">
+          <p className="text-slate-400 text-sm md:text-base font-mono leading-relaxed">
             My approach is minimal, premium, and always focused on the client's conversion goals. Whether it's a logo, a mobile app, or social media content, I bring a strategic eye to every project.
           </p>
         </motion.div>

@@ -61,34 +61,35 @@ export const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-24 px-6 bg-dark">
+    <section id="contact" className="py-16 md:py-24 px-4 md:px-6 bg-dark">
       <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-20">
+        <div className="grid lg:grid-cols-2 gap-12 md:gap-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            className="text-center md:text-left"
           >
-            <p className="text-primary font-bold uppercase tracking-widest text-xs mb-4">Contact</p>
-            <h2 className="text-4xl md:text-6xl font-display font-bold mb-8">
+            <p className="text-primary font-bold uppercase tracking-widest text-[10px] md:text-xs mb-4">Contact</p>
+            <h2 className="text-3xl md:text-6xl font-display font-bold mb-6 md:mb-8">
               Let’s <span className="text-primary">Connect</span>
             </h2>
-            <p className="text-slate-400 text-lg mb-12">
+            <p className="text-slate-400 text-sm md:text-lg mb-8 md:mb-12">
               Ready to start your next project? Feel free to reach out through any of these platforms or use the contact form.
             </p>
 
-            <div className="grid sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 gap-4 md:gap-6">
               {contactLinks.map((link) => (
                 <a 
                   key={link.label}
                   href={link.href}
                   target={link.href.startsWith('http') ? "_blank" : undefined}
                   rel={link.href.startsWith('http') ? "noopener noreferrer" : undefined}
-                  className="p-6 rounded-2xl bg-surface border border-border hover:border-primary/20 transition-all group"
+                  className="p-4 md:p-6 rounded-2xl bg-surface border border-border hover:border-primary/20 transition-all group"
                 >
-                  <link.icon className="w-6 h-6 text-primary mb-4" />
-                  <p className="text-slate-500 text-[10px] uppercase tracking-widest font-bold mb-1">{link.label}</p>
-                  <p className="text-foreground font-bold text-sm group-hover:text-primary transition-colors">{link.value}</p>
+                  <link.icon className="w-5 h-5 md:w-6 md:h-6 text-primary mb-3 md:mb-4 mx-auto md:mx-0" />
+                  <p className="text-slate-500 text-[8px] md:text-[10px] uppercase tracking-widest font-bold mb-1">{link.label}</p>
+                  <p className="text-foreground font-bold text-xs md:text-sm group-hover:text-primary transition-colors truncate">{link.value}</p>
                 </a>
               ))}
             </div>
@@ -100,45 +101,45 @@ export const Contact = () => {
             animate={isShaking ? { x: [-10, 10, -10, 10, 0] } : { opacity: 1, y: 0 }}
             transition={isShaking ? { duration: 0.4 } : { duration: 0.5 }}
             viewport={{ once: true }}
-            className="bg-surface p-10 rounded-[2rem] border border-border"
+            className="bg-surface p-6 md:p-10 rounded-[1.5rem] md:rounded-[2rem] border border-border"
           >
-            <h3 className="text-2xl font-display font-bold mb-8 text-foreground">Send a Message</h3>
+            <h3 className="text-xl md:text-2xl font-display font-bold mb-6 md:mb-8 text-foreground text-center md:text-left">Send a Message</h3>
             
-            <form onSubmit={handleSubmit(onSubmit, onError)} className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit, onError)} className="space-y-4 md:space-y-6">
               <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Name</label>
+                <label className="text-[8px] md:text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Name</label>
                 <input 
                   {...register('name', { required: true })}
-                  className="w-full bg-surface border border-border rounded-xl px-6 py-4 text-foreground focus:outline-none focus:border-primary transition-colors"
+                  className="w-full bg-surface border border-border rounded-xl px-4 md:px-6 py-3 md:py-4 text-sm md:text-foreground focus:outline-none focus:border-primary transition-colors"
                   placeholder="Your Name"
                 />
-                {errors.name && <span className="text-red-500 text-[10px] font-bold uppercase tracking-widest ml-2">Required</span>}
+                {errors.name && <span className="text-red-500 text-[8px] md:text-[10px] font-bold uppercase tracking-widest ml-2">Required</span>}
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Email</label>
+                <label className="text-[8px] md:text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Email</label>
                 <input 
                   {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
-                  className="w-full bg-surface border border-border rounded-xl px-6 py-4 text-foreground focus:outline-none focus:border-primary transition-colors"
+                  className="w-full bg-surface border border-border rounded-xl px-4 md:px-6 py-3 md:py-4 text-sm md:text-foreground focus:outline-none focus:border-primary transition-colors"
                   placeholder="your@email.com"
                 />
-                {errors.email && <span className="text-red-500 text-[10px] font-bold uppercase tracking-widest ml-2">Invalid Email</span>}
+                {errors.email && <span className="text-red-500 text-[8px] md:text-[10px] font-bold uppercase tracking-widest ml-2">Invalid Email</span>}
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Message</label>
+                <label className="text-[8px] md:text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Message</label>
                 <textarea 
                   {...register('message', { required: true })}
                   rows={4}
-                  className="w-full bg-surface border border-border rounded-xl px-6 py-4 text-foreground focus:outline-none focus:border-primary transition-colors resize-none"
+                  className="w-full bg-surface border border-border rounded-xl px-4 md:px-6 py-3 md:py-4 text-sm md:text-foreground focus:outline-none focus:border-primary transition-colors resize-none"
                   placeholder="Your Message"
                 />
-                {errors.message && <span className="text-red-500 text-[10px] font-bold uppercase tracking-widest ml-2">Required</span>}
+                {errors.message && <span className="text-red-500 text-[8px] md:text-[10px] font-bold uppercase tracking-widest ml-2">Required</span>}
               </div>
 
               <button 
                 disabled={isSubmitting}
-                className="w-full py-4 rounded-xl bg-primary text-slate-900 font-bold uppercase tracking-widest hover:bg-slate-900 hover:text-primary transition-all glow-yellow flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full py-3 md:py-4 rounded-xl bg-primary text-slate-900 font-bold uppercase tracking-widest hover:bg-slate-900 hover:text-primary transition-all glow-yellow flex items-center justify-center gap-2 disabled:opacity-50 text-xs md:text-sm"
               >
                 {isSubmitting ? "Sending..." : "Send Message"}
               </button>

@@ -49,7 +49,7 @@ export const HirePanel = ({ isOpen, onClose }: HirePanelProps) => {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed top-0 right-0 z-[101] h-full w-full max-w-md bg-dark minecraft-border shadow-2xl flex flex-col"
+            className="fixed top-0 right-0 z-[101] h-full w-full md:max-w-md bg-dark minecraft-border shadow-2xl flex flex-col"
           >
             {/* Header */}
             <div className="p-6 border-b-4 border-black flex items-center justify-between">

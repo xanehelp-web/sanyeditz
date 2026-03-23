@@ -9,14 +9,14 @@ export const Services = () => {
   const { openHirePanel } = useHirePanel();
 
   return (
-    <section id="services" className="py-24 px-6 bg-dark relative overflow-hidden">
+    <section id="services" className="py-16 md:py-24 px-4 md:px-6 bg-dark relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-20">
-          <p className="text-primary font-display text-xs mb-4">Pricing</p>
-          <h2 className="text-4xl md:text-6xl font-display mb-6">
+        <div className="text-center mb-12 md:mb-20">
+          <p className="text-primary font-display text-[10px] md:text-xs mb-4">Pricing</p>
+          <h2 className="text-3xl md:text-6xl font-display mb-4 md:mb-6">
             Design <span className="text-primary">Services</span>
           </h2>
-          <p className="text-slate-400 max-w-2xl mx-auto font-mono text-base">
+          <p className="text-slate-400 max-w-2xl mx-auto font-mono text-sm md:text-base">
             Choose a plan that fits your needs. All plans include high-quality deliverables and professional support.
           </p>
         </div>
