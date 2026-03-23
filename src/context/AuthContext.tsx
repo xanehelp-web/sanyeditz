@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { onAuthStateChanged, signInWithPopup, signOut, User as FirebaseUser } from 'firebase/auth';
+import { FirebaseError } from 'firebase/app';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { auth, db, googleProvider } from '../lib/firebase';
 
@@ -100,6 +101,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       await signInWithPopup(auth, googleProvider);
     } catch (error) {
+      if (error instanceof FirebaseError) {
+        if (error.code === 'auth/popup-closed-by-user') {
+          // User closed the popup, we can ignore this or show a subtle message
+          console.log('Login popup closed by user');
+          return;
+        }
+        if (error.code === 'auth/cancelled-popup-request') {
+          // Multiple popups opened, ignore
+          return;
+        }
+      }
       console.error('Login Error:', error);
     }
   };
